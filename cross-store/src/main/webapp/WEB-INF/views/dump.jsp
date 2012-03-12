@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Spring Data MongoDB/MySQL Cross-Store</title>
+    <title>Spring Data MongoDB/Relational Cross-Store</title>
     <link rel="stylesheet" href="resources/css/main.css" type="text/css"></link>
     <link rel="stylesheet" href="resources/css/colors.css" type="text/css"></link>
     <link rel="stylesheet" href="resources/css/local.css" type="text/css"></link>
@@ -13,7 +13,7 @@
     <div id="header">
         <div id="name-and-company">
             <div id='site-name'>
-                <a href="index" title="Spring Data Cross-Store MySQL/MongoDB">Spring Data Cross-Store MySQL/MongoDB</a>
+                <a href="index" title="Spring Data Cross-Store Relational/MongoDB">Spring Data Cross-Store Relational/MongoDB</a>
             </div>
             <div id='company-name'>
                 <a href="http://www.springsource.com" title="SpringSource">SpringSource Home</a>
@@ -37,12 +37,5 @@
         </div>
     </div>
 </div>
-
-<DIV class = "cloudEnvironment">
-    ${host}:${port}
-</DIV>
-
-
-
 </body>
 </html>
