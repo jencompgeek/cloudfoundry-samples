@@ -280,6 +280,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.15</version>
         </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.0-801.jdbc4</version>
+        </dependency>
 
         <!-- Test -->
         <dependency>
@@ -288,6 +293,14 @@
             <version>4.7</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.jsimone</groupId>
+            <artifactId>webapp-runner</artifactId>
+            <version>7.0.22.3</version>
+            <scope>provided</scope>
+        </dependency>
+
 
     </dependencies>
     <repositories>
@@ -395,6 +408,48 @@
                 <artifactId>tomcat-maven-plugin</artifactId>
                 <version>1.0-beta-1</version>
             </plugin>
+             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>copy-dependencies</goal></goals>
+                        <configuration>
+                            <includeArtifactIds>webapp-runner</includeArtifactIds>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+				    <groupId>org.eclipse.m2e</groupId>
+				     <artifactId>lifecycle-mapping</artifactId>
+				     <version>1.0.0</version>
+				     <configuration>
+				        <lifecycleMappingMetadata>
+				          <pluginExecutions>
+				            <pluginExecution>
+				              <pluginExecutionFilter>
+				                <groupId>org.apache.maven.plugins</groupId>
+				                <artifactId>maven-dependency-plugin</artifactId>
+				                <versionRange>[1.0.0,)</versionRange>
+				                <goals>
+				                  <goal>copy-dependencies</goal>
+				                </goals>
+				              </pluginExecutionFilter>
+				              <action>
+							    <ignore/>
+							  </action>
+				            </pluginExecution>
+				          </pluginExecutions>
+				        </lifecycleMappingMetadata>
+				     </configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
     </build>
 </project>

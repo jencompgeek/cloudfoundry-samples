@@ -17,6 +17,8 @@
 	<context:component-scan
 		base-package="org.springframework.data.mongodb.examples.custsvc.data" />
 
+    <context:property-placeholder/>
+
 	<tx:annotation-driven transaction-manager="transactionManager"
 		mode="aspectj" />
 
@@ -52,12 +54,33 @@
 
    <!--  Cloud Foundry automatically activates the cloud profile -->
 	<beans profile="cloud">
-		<cloud:mongo-db-factory id="mongodbFactory" />
+	    <cloud:mongo-db-factory id="mongodbFactory" />
 		<cloud:data-source id="customer-db" />
 		<bean id="jpaVendorAdapter"
 			class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" p:database="MYSQL">
 		</bean>
 	</beans>
+
+    <beans profile="heroku">
+        <bean id="mongoURI" class="com.mongodb.MongoURI">
+            <constructor-arg value="${MONGOHQ_URL}"/>
+        </bean>
+        <bean id="mongodbFactory" class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
+            <constructor-arg ref="mongoURI"/>
+        </bean>
+        <bean class="java.net.URI" id="dbUrl">
+            <constructor-arg value="${DATABASE_URL}"/>
+        </bean>
+        <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="customer-db">
+            <property name="driverClassName" value="org.postgresql.Driver" />
+            <property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
+            <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
+            <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
+        </bean>
+        <bean id="jpaVendorAdapter"
+              class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" p:database="POSTGRESQL">
+        </bean>
+    </beans>
 
     <!--  Default profile for local testing -->
 	<beans profile="default">
